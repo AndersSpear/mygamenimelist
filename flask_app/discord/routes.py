@@ -10,7 +10,7 @@ import requests
 import os
 
 thisfolder = os.path.dirname(os.path.abspath(__file__))
-initfile = os.path.join(thisfolder, 'secrets.cfg')
+initfile = os.path.join(thisfolder, '../secrets.cfg')
 config = cp.ConfigParser()
 config.read(initfile)
 DISCORD_CLIENT_ID = config.get('DISCORD', 'DISCORD_CLIENT_ID')
