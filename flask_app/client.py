@@ -1,9 +1,12 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import configparser as cp
+import os
 
+thisfolder = os.path.dirname(os.path.abspath(__file__))
+initfile = os.path.join(thisfolder, 'secrets.cfg')
 config = cp.ConfigParser()
-config.read('secrets.cfg')
+config.read(initfile)
 SPOTIPY_CLIENT_ID = config.get('SPOTIFY', 'SPOTIPY_CLIENT_ID')
 SPOTIPY_CLIENT_SECRET = config.get('SPOTIFY', 'SPOTIPY_CLIENT_SECRET')
 

@@ -7,9 +7,12 @@ from .. import bcrypt
 from ..forms import RegistrationForm, LoginForm, UpdateUsernameForm
 from ..models import User, load_user
 import requests
+import os
 
+thisfolder = os.path.dirname(os.path.abspath(__file__))
+initfile = os.path.join(thisfolder, 'secrets.cfg')
 config = cp.ConfigParser()
-config.read('secrets.cfg')
+config.read(initfile)
 DISCORD_CLIENT_ID = config.get('DISCORD', 'DISCORD_CLIENT_ID')
 DISCORD_CLIENT_SECRET = config.get('DISCORD', 'DISCORD_CLIENT_SECRET')
 
