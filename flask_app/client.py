@@ -35,7 +35,9 @@ class SongClient(object):
         print(SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET)
         creds = SpotifyClientCredentials(
             client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET)
-        self.sp = spotipy.Spotify(auth_manager=creds)
+        spoauth = spotipy.oauth2.SpotifyOAuth(
+            client_id = SPOTIPY_CLIENT_ID, client_secret = SPOTIPY_CLIENT_SECRET, redirect_uri = 'https://msl.aspear.cs.umd.edu/callback')
+        self.sp = spotipy.Spotify(auth_manager=spoauth)
 
     def search(self, search_string):
         """
