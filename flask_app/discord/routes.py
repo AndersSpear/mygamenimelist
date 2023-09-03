@@ -1,11 +1,12 @@
 from flask import Blueprint, redirect, url_for, render_template, flash, request, session
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_dance.contrib.discord import make_discord_blueprint, discord
+from config import DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET
 from urllib import parse
 from .. import bcrypt
 from ..forms import RegistrationForm, LoginForm, UpdateUsernameForm
 from ..models import User, load_user
-import os, requests
+import requests
 
 
 #heres a commnet
@@ -13,8 +14,8 @@ API_ENDPOINT = 'https://discord.com/api/v10'
 REDIRECT_URI = 'https://msl.aspear.cs.umd.edu/callback'
 
 discordd = make_discord_blueprint(
-    client_id=os.environ.get("DISCORD_CLIENT_ID"),
-    client_secret=os.environ.get("DISCORD_CLIENT_SECRET"),
+    client_id=DISCORD_CLIENT_ID,
+    client_secret=DISCORD_CLIENT_SECRET,
     redirect_url=REDIRECT_URI,
 )
 
@@ -31,8 +32,8 @@ discordd = make_discord_blueprint(
 def callback():
     code = request.args['code']
     data = {
-        'client_id': os.environ.get("DISCORD_CLIENT_ID"),
-        'client_secret': os.environ.get("DISCORD_CLIENT_SECRET"),
+        'client_id': DISCORD_CLIENT_ID,
+        'client_secret': DISCORD_CLIENT_SECRET,
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': REDIRECT_URI

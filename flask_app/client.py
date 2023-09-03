@@ -1,7 +1,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-import os
-
+from config import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET
 
 class Song(object):
     def __init__(self, songdict, detailed=False):
@@ -26,7 +25,7 @@ class Song(object):
 class SongClient(object):
     def __init__(self):
         creds = SpotifyClientCredentials(
-            client_id=os.environ.get('SPOTIPY_CLIENT_ID'), client_secret=os.environ.get('SPOTIPY_CLIENT_SECRET'))
+            client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET)
         self.sp = spotipy.Spotify(auth_manager=creds)
 
     def search(self, search_string):
