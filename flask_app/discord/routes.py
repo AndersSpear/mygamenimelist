@@ -1,13 +1,17 @@
 from flask import Blueprint, redirect, url_for, render_template, flash, request, session
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_dance.contrib.discord import make_discord_blueprint, discord
-from config import DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET
+import configparser as cp
 from urllib import parse
 from .. import bcrypt
 from ..forms import RegistrationForm, LoginForm, UpdateUsernameForm
 from ..models import User, load_user
 import requests
 
+config = cp.ConfigParser()
+config.readfp(open(r'secrets.cfg'))
+DISCORD_CLIENT_ID = config.get('DISCORD', 'DISCORD_CLIENT_ID')
+DISCORD_CLIENT_SECRET = config.get('DISCORD', 'DISCORD_CLIENT_SECRET')
 
 #heres a commnet
 API_ENDPOINT = 'https://discord.com/api/v10'
