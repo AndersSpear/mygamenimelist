@@ -3,7 +3,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import configparser as cp
 
 config = cp.ConfigParser()
-config.readfp(open(r'secrets.cfg'))
+config.read('secrets.cfg')
 SPOTIPY_CLIENT_ID = config.get('SPOTIFY', 'SPOTIPY_CLIENT_ID')
 SPOTIPY_CLIENT_SECRET = config.get('SPOTIFY', 'SPOTIPY_CLIENT_SECRET')
 

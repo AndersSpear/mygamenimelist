@@ -9,7 +9,7 @@ from ..models import User, load_user
 import requests
 
 config = cp.ConfigParser()
-config.readfp(open(r'secrets.cfg'))
+config.read('secrets.cfg')
 DISCORD_CLIENT_ID = config.get('DISCORD', 'DISCORD_CLIENT_ID')
 DISCORD_CLIENT_SECRET = config.get('DISCORD', 'DISCORD_CLIENT_SECRET')
 
