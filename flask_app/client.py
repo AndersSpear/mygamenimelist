@@ -32,6 +32,7 @@ class Song(object):
 
 class SongClient(object):
     def __init__(self):
+        print(SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET)
         creds = SpotifyClientCredentials(
             client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET)
         self.sp = spotipy.Spotify(auth_manager=creds)
