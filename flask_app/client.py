@@ -1,14 +1,5 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-import configparser as cp
-import os
-
-thisfolder = os.path.dirname(os.path.abspath(__file__))
-initfile = os.path.join(thisfolder, 'secrets.cfg')
-config = cp.ConfigParser()
-config.read(initfile)
-SPOTIPY_CLIENT_ID = config.get('SPOTIFY', 'SPOTIPY_CLIENT_ID')
-SPOTIPY_CLIENT_SECRET = config.get('SPOTIFY', 'SPOTIPY_CLIENT_SECRET')
 
 class Song(object):
     def __init__(self, songdict, detailed=False):
@@ -32,12 +23,7 @@ class Song(object):
 
 class SongClient(object):
     def __init__(self):
-        print(SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET)
-        creds = SpotifyClientCredentials(
-            client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET)
-        spoauth = spotipy.oauth2.SpotifyOAuth(
-            client_id = SPOTIPY_CLIENT_ID, client_secret = SPOTIPY_CLIENT_SECRET)
-        self.sp = spotipy.Spotify(auth_manager=spoauth)
+        self.sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
 
     def search(self, search_string):
         """
