@@ -1,28 +1,21 @@
 from flask import Blueprint, redirect, url_for, render_template, flash, request, session
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_dance.contrib.discord import make_discord_blueprint, discord
-import configparser as cp
 from urllib import parse
 from .. import bcrypt
 from ..forms import RegistrationForm, LoginForm, UpdateUsernameForm
 from ..models import User, load_user
 import requests
 import os
-
-thisfolder = os.path.dirname(os.path.abspath(__file__))
-initfile = os.path.join(thisfolder, '../secrets.cfg')
-config = cp.ConfigParser()
-config.read(initfile)
-DISCORD_CLIENT_ID = config.get('DISCORD', 'DISCORD_CLIENT_ID')
-DISCORD_CLIENT_SECRET = config.get('DISCORD', 'DISCORD_CLIENT_SECRET')
+import json
 
 #heres a commnet
 API_ENDPOINT = 'https://discord.com/api/v10'
 REDIRECT_URI = 'https://msl.aspear.cs.umd.edu/callback'
 
 discordd = make_discord_blueprint(
-    client_id=DISCORD_CLIENT_ID,
-    client_secret=DISCORD_CLIENT_SECRET,
+    client_id=os.environ["DISCORD_CLIENT_ID"],
+    client_secret=os.environ["DISCORD_CLIENT_SECRET"],
     redirect_url=REDIRECT_URI,
 )
 
@@ -37,10 +30,11 @@ discordd = make_discord_blueprint(
 
 @discordd.route("/callback")
 def callback():
+
     code = request.args['code']
     data = {
-        'client_id': DISCORD_CLIENT_ID,
-        'client_secret': DISCORD_CLIENT_SECRET,
+        'client_id': os.environ["DISCORD_CLIENT_ID"],
+        'client_secret': os.environ["DISCORD_CLIENT_SECRET"],
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': REDIRECT_URI
@@ -49,12 +43,13 @@ def callback():
         'Content-Type': 'application/x-www-form-urlencoded'
     }
     resp = requests.post('%s/oauth2/token' % API_ENDPOINT, data=data, headers=headers)
-    json = resp.json()
-    access_token = json['access_token']
+    jsonn = resp.json()
+    #print(type(jsonn))
+    #print(json.dumps(jsonn))
+    access_token = jsonn['access_token']
 
     new_headers = {"Authorization": f"Bearer {access_token}"}
     resp2 = requests.get("https://discord.com/api/oauth2/@me", headers=new_headers)
-
     if resp2.status_code == 200:
         user_info = resp2.json()
         username = user_info['user']['username']
@@ -63,9 +58,8 @@ def callback():
         # resp3 = requests.get('https://discord.com/api/users/@me', headers={
         #     'Authorization': f'Bearer {access_token}'
         # })
-        # user_data = resp3.json()
+        # user_data = resp3.jsonn()
         # #email = user_data['email']
-
         user = User.objects(discord_user_id=discord_user_id).first()
         if user is None:
             user = User(username=username, discord_user_id=discord_user_id)
