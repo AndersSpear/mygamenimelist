@@ -5,3 +5,4 @@ flask_app/__pycache__/
 flask_app/users/__pycache__/
 .cache 
 .DS_Store
+run.sh
