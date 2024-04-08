@@ -1,6 +1,7 @@
 from flask import Blueprint, redirect, url_for, render_template, flash, request, session
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_dance.contrib.discord import make_discord_blueprint, discord
+import xmltodict
 from urllib import parse
 from .. import bcrypt
 from ..forms import RegistrationForm, LoginForm, UpdateUsernameForm
@@ -24,12 +25,8 @@ discordd = make_discord_blueprint(
 def cascallback():
     ticket = request.args['ticket']
     resp = requests.get("https://shib.idm.umd.edu/shibboleth-idp/profile/cas/serviceValidate", params={"ticket":ticket})
-    print("meow")
-    print(resp)
-    print(resp.text)
-    r = resp.json()
+    r = xmltodict.parse(resp.content)
     print(r)
-    print("meow")
 
 # @discordd.route("/")
 # def index():
