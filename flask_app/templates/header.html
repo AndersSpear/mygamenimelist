@@ -25,7 +25,17 @@
                     Logout
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://shib.idm.umd.edu/shibboleth-idp/profile/cas/logout?redirect_uri=https%3A%2F%2Fmsl.aspear.cs.umd.edu%2F">
+                    Log out of CAS
+                </a>
+            </li>
             {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="https://shib.idm.umd.edu/shibboleth-idp/profile/cas/login?redirect_uri=https%3A%2F%2Fmsl.aspear.cs.umd.edu%2Fcascallback">
+                    CAS Login
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="https://discord.com/api/oauth2/authorize?client_id=1101288251232358430&redirect_uri=https%3A%2F%2Fmsl.aspear.cs.umd.edu%2Fcallback&response_type=code&scope=identify">
                     Discord Login
