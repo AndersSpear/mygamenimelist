@@ -24,7 +24,11 @@ discordd = make_discord_blueprint(
 def cascallback():
     ticket = request.args['ticket']
     resp = requests.get("https://shib.idm.umd.edu/shibboleth-idp/profile/cas/serviceValidate", params={"ticket":ticket})
-    print(resp.json)
+    r = resp.json()
+    print("meow")
+    print(resp)
+    print(resp.text)
+    print(r)
     print("meow")
 
 # @discordd.route("/")
