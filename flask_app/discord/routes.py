@@ -101,3 +101,9 @@ def callback():
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+@discordd.route("/caslogout")
+@login_required
+def caslogout():
+    logout_user()
+    return redirect("https://shib.idm.umd.edu/shibboleth-idp/profile/cas/logout?service=https%3A%2F%2Fmsl.aspear.cs.umd.edu%2F")
