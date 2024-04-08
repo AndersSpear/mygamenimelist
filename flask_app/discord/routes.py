@@ -25,6 +25,7 @@ def cascallback():
     ticket = request.args['ticket']
     resp = requests.get("https://shib.idm.umd.edu/shibboleth-idp/profile/cas/serviceValidate", params={"ticket":ticket})
     print(resp.json)
+    print("meow")
 
 # @discordd.route("/")
 # def index():
