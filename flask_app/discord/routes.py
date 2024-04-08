@@ -24,7 +24,7 @@ discordd = make_discord_blueprint(
 @discordd.route("/cascallback")
 def cascallback():
     ticket = request.args['ticket']
-    resp = requests.get("https://shib.idm.umd.edu/shibboleth-idp/profile/cas/serviceValidate", params={"service":"https://msl.aspear.cs.umd.edu/cascallback/","ticket":ticket})
+    resp = requests.get("https://shib.idm.umd.edu/shibboleth-idp/profile/cas/serviceValidate", params={"service":"https://msl.aspear.cs.umd.edu/cascallback","ticket":ticket})
     r = xmltodict.parse(resp.content)
     print(resp.url)
     print(r)
