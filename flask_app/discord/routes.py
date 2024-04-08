@@ -26,6 +26,7 @@ def cascallback():
     ticket = request.args['ticket']
     resp = requests.get("https://shib.idm.umd.edu/shibboleth-idp/profile/cas/serviceValidate", params={"service":"https://msl.aspear.cs.umd.edu/","ticket":ticket})
     r = xmltodict.parse(resp.content)
+    print(resp.url)
     print(r)
     if 'cas:authenticationSuccess' in r:
         username = r['user']
