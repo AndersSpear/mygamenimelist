@@ -24,10 +24,27 @@ discordd = make_discord_blueprint(
 @discordd.route("/cascallback")
 def cascallback():
     ticket = request.args['ticket']
-    resp = requests.get("https://shib.idm.umd.edu/shibboleth-idp/profile/cas/serviceValidate", params={"ticket":ticket})
+    resp = requests.get("https://shib.idm.umd.edu/shibboleth-idp/profile/cas/serviceValidate", params={"service":"https://msl.aspear.net","ticket":ticket})
     r = xmltodict.parse(resp.content)
     print(r)
+    if 'cas:authenticationSuccess' in r:
+        username = r['user']
+        discord_user_id = user_info['user']['id']
 
+        # resp3 = requests.get('https://discord.com/api/users/@me', headers={
+        #     'Authorization': f'Bearer {access_token}'
+        # })
+        # user_data = resp3.jsonn()
+        # #email = user_data['email']
+        #user = User.objects(discord_user_id=discord_user_id).first()
+        #if user is None:
+        #    user = User(username=username, discord_user_id=discord_user_id)
+        #    user.save()
+
+        #ogin_user(user)
+        return redirect(url_for("users.account"))
+    else:
+        return render_template("404.html")
 # @discordd.route("/")
 # def index():
 #     if not discord.authorized:
