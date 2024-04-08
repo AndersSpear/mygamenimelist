@@ -28,7 +28,7 @@ def cascallback():
     r = xmltodict.parse(resp.content)
     print(resp.url)
     print(r)
-    if 'cas:authenticationSuccess' in r:
+    if 'cas:authenticationSuccess' in r['cas:serviceResponse']:
         username = r['cas:serviceResponse']['cas:authenticationSuccess']['cas:user']
         discord_user_id = r['cas:serviceResponse']['cas:authenticationSuccess']['cas:user']
 
